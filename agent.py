@@ -208,7 +208,7 @@ class ConversionAgent:
             "checks": checks,
             "trace": trace,
             "limitations": [
-                "The model uses recorded session summaries, including PageValues; it is not an arrival-time predictor.",
+                "The model excludes PageValues but still uses recorded browsing-session summaries; it is not an arrival-time predictor.",
                 "Historical correlations and model scores do not demonstrate why a visitor did or did not buy.",
                 "This dataset does not include individual checkout-step events.",
                 "The agent proposes an A/B test; it does not run campaigns or prove business lift.",

@@ -12,7 +12,7 @@ Analyze historical e-commerce browsing sessions, estimate whether a recorded ses
 - Source: [UCI Online Shoppers Purchasing Intention, dataset 468](https://archive.ics.uci.edu/dataset/468/online+shoppers+purchasing+intention+dataset)
 - **12,330 sessions**; **1,908 purchased**; **10,422 did not purchase**.
 - Historical purchase conversion rate = **1,908 / 12,330 = 15.47%** (shown as **15.5%** in the app).
-- **17 input features** plus the binary **Revenue** outcome; one record summarizes a browsing session.
+- **17 original dataset features** plus the binary **Revenue** outcome; the deployed prediction model intentionally uses **16** of those features (excluding `PageValues`). One record summarizes a browsing session.
 - Data contains page-category counts/durations, BounceRates, ExitRates, PageValues, visitor type, month and other session attributes.
 - It does **not** contain event-by-event click paths, add-to-cart, checkout start, payment attempts or checkout completion stages.
 
@@ -30,7 +30,7 @@ Analyze historical e-commerce browsing sessions, estimate whether a recorded ses
 - No precise identification of the checkout step where people leave.
 - No proof that a page element caused abandonment or that a proposed change improves conversion.
 - No live website connection, marketing automation or actual A/B test execution.
-- No start-of-visit purchase prediction: **PageValues** and other session summaries may only be available after browsing; PageValues may also encode information strongly associated with outcomes.
+- No start-of-visit purchase prediction: although **PageValues is excluded from the deployed model**, other inputs summarize behavior throughout a visit and may only become available after browsing.
 - The present tool-routing policy is **rule-based**, not LLM-selected. If the professor requires an LLM agent, that is a separate enhancement.
 
 ## Dashboard guidance — colleague workstream
@@ -70,9 +70,10 @@ Analyze historical e-commerce browsing sessions, estimate whether a recorded ses
 
 ## Validation already completed
 
-- Random Forest held-out test: accuracy **88.93%**, precision **62.65%**, recall **70.68%**, F1 **66.42%**, ROC-AUC **0.9220**.
-- Agent tested on sessions **643** (low probability, landing-page hypothesis), **120** (high probability, product information hypothesis) and **4** (low probability, product discovery hypothesis).
-- All three test reports include explanations and limitations; no campaigns were launched.
+- Original 17-feature Random Forest held-out test: accuracy **88.93%**, precision **62.65%**, recall **70.68%**, F1 **66.42%**, ROC-AUC **0.9220**.
+- The 16-feature ablation (excluding `PageValues`) previously gave accuracy **81.27%**, precision **38.57%**, recall **35.34%**, F1 **36.89%**, ROC-AUC **0.7613**. Confirm these values after retraining before claiming them as deployed-model metrics.
+- The earlier agent tests on sessions **643**, **120** and **4** are valid for the **17-feature model only**. After the model swap, rerun `test_agent_validation.py` and select new examples.
+- All agent reports must include limitations; no campaigns were launched.
 
 ## Remaining external clarification
 

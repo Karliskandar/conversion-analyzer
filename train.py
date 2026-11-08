@@ -1,4 +1,4 @@
-"""Train a reproducible baseline purchase-prediction model.
+"""Train a reproducible purchase-prediction model excluding PageValues.
 
 Run: python train.py
 Input: data/online_shoppers_intention.csv
@@ -56,7 +56,7 @@ def main() -> None:
     df = pd.read_csv(DATA)
     if "Revenue" not in df.columns:
         raise ValueError("Dataset needs a Revenue column.")
-    X = df.drop(columns=["Revenue"])
+    X = df.drop(columns=["Revenue", "PageValues"])
     y = to_binary_target(df["Revenue"])
     unknown = sorted(set(CATEGORIES) - set(X.columns))
     if unknown:
@@ -134,8 +134,9 @@ def main() -> None:
         print(f"  {key:12}: {scores[key]:.4f}")
     print(f"\nSaved model: {MODEL}")
     print(f"Saved outputs: {REPORTS}")
-    print("Note: PageValues is a session-level field; do not describe this as")
-    print("a beginning-of-session or causal prediction system.")
+    print("Note: PageValues is EXCLUDED from training and prediction.")
+    print("Other features summarize behavior across a session, so this")
+    print("is NOT a beginning-of-session or causal prediction system.")
 
 
 if __name__ == "__main__":
