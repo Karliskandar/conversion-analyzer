@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.streamlit/secrets.toml
+.DS_Store
+# Original dataset can be downloaded using the included script.
+data/*.csv
+# Model and report artifacts can be regenerated using train.py.
+models/*.joblib
+reports/*.csv
+reports/*.json
+reports/*.png
