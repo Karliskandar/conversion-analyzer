@@ -1,4 +1,4 @@
-# AI Website Conversion Analyzer — Day 1 starter
+# AI Website Conversion Optimization Agent
 
 **Goal:** analyze online shopping sessions and predict whether a recorded session results in a purchase. This is a marketing analytics and session-level purchase-intent project, not a clickstream checkout funnel.
 
@@ -27,8 +27,10 @@ Citation: Sakar, C. & Kastro, Y. (2018). Online Shoppers Purchasing Intention Da
 - `download_data.py` — downloads UCI dataset #468; shared data source
 - `train.py` — **your** baseline Random Forest, evaluation and saved model
 - `app.py` — **your** home page / prediction interface
-- `pages/02_Dashboard.py` — **colleague** adds Streamlit analytics page
-- `pages/03_Recommendations.py` — **colleague** adds Streamlit recommendation page
+- `pages/02_Dashboard.py` — Raël's historical analytics dashboard, filters, charts and CSV exports
+- `pages/03_Recommendations.py` — Raël's cohort evidence and proposed marketing A/B experiments
+- `ANALYTICS_HANDOFF.md` — analytics methodology, findings, integration and validation guide
+- `export_dashboard_analysis.py` — generates three presentation charts and the marketing analysis report
 - `data/online_shoppers_intention.csv` — original dataset (generated)
 - `models/purchase_model.joblib` — fitted model (generated)
 - `reports/metrics.json` — model test metrics (generated)
@@ -36,17 +38,19 @@ Citation: Sakar, C. & Kastro, Y. (2018). Online Shoppers Purchasing Intention Da
 - `reports/feature_importance.png` — figure for your presentation
 - `reports/test_examples.csv` — held-out examples for live demo
 
-The `pages` folder is intentionally empty; your teammate can create those two pages independently. Their dashboard should read `data/online_shoppers_intention.csv`, and their recommendation rules should be based on observed associations and explicitly labeled as hypotheses, not proven causes.
+Streamlit discovers the AI Agent, Dashboard and Recommendations pages automatically. All pages read `data/online_shoppers_intention.csv`. The analytics pages work without a trained model; their recommendations are grounded in observed associations and labeled as hypotheses for future experiments. See [ANALYTICS_HANDOFF.md](ANALYTICS_HANDOFF.md) for findings and details.
+
+Validate the analytics and export its charts with `python -m unittest test_dashboard -v` and `python export_dashboard_analysis.py`. The exported files use the `reports/dashboard_` prefix.
 
 ## What to record for slides
 
-- Dataset: 12,330 sessions, 17 input variables and a binary purchase outcome (`Revenue`).
+- Dataset: 12,330 sessions, 17 original input variables and a binary purchase outcome (`Revenue`). The prediction model uses 16 variables, excluding `PageValues`.
 - Train/test split: 80/20, stratified, `random_state=42`.
 - Algorithm: RandomForestClassifier with categorical encoding and balanced class weights.
 - Read actual numbers from `reports/metrics.json`; **do not invent scores**.
 - Always show precision, recall, F1 and ROC-AUC (not only accuracy): only about 15.5% of original sessions end in purchases.
 - Data limitation: row = session summary, not a full clickstream. No measured add-to-cart or checkout-stage abandonment.
-- Prediction limitation: features such as PageValues may be known only later in a browsing session. Don't claim a perfect start-of-visit prediction.
+- Prediction limitation: although `PageValues` is excluded, other features summarize behavior across the visit. This is not a start-of-visit prediction.
 
 ## Git commands (run after you have tested the model)
 

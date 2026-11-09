@@ -10,3 +10,4 @@ models/*.joblib
 reports/*.csv
 reports/*.json
 reports/*.png
+reports/dashboard_marketing_analysis.txt
