@@ -47,7 +47,7 @@ row = heldout.iloc[[number - 1]].copy()
 actual = bool(row.pop("ActualRevenue").iloc[0])
 
 st.write("This visitor's measured session features:")
-st.dataframe(row.T.rename(columns={row.index[0]: "Value"}), use_container_width=True)
+st.dataframe(row.T.rename(columns={row.index[0]: "Value"}).astype(str), width="stretch")
 
 if st.button("Predict purchase likelihood", type="primary"):
     probability = float(model.predict_proba(row)[0, 1])

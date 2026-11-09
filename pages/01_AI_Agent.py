@@ -47,7 +47,7 @@ with right:
 sample = examples.iloc[[number - 1]].copy()
 actual = str(sample.pop("ActualRevenue").iloc[0]).strip().lower() in {"true", "1"}
 with st.expander("View this session's recorded features"):
-    st.dataframe(sample.T.rename(columns={sample.index[0]: "Value"}), use_container_width=True)
+    st.dataframe(sample.T.rename(columns={sample.index[0]: "Value"}).astype(str), width="stretch")
 
 if st.button("🚀 Run the AI agent", type="primary"):
     try:
